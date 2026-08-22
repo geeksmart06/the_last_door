@@ -1,7 +1,8 @@
-import type { MonsterState, PlayerStats } from '../types/game';
+import type { MonsterState } from '../types/game';
+import type { CombatPlayerStats } from '../game/combat';
 
 interface CombatUIProps {
-  player: PlayerStats;
+  player: CombatPlayerStats;
   monster: MonsterState;
   combatLog: string;
   onAttack: () => void;

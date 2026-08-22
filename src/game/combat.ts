@@ -1,4 +1,12 @@
-import type { MonsterState, PlayerStats } from '../types/game';
+import type { MonsterState } from '../types/game';
+
+export interface CombatPlayerStats {
+  hp: number;
+  maxHp: number;
+  def: number;
+  round: number;
+  score?: number;
+}
 
 export function createMonsterForRound(round: number): MonsterState {
   const monsterTypes: Array<{
@@ -56,7 +64,7 @@ export interface CombatTurnResult {
 }
 
 export function executePlayerAttack(
-  player: PlayerStats,
+  player: CombatPlayerStats,
   monster: MonsterState
 ): CombatTurnResult {
   // Player damage: 15-30
@@ -100,7 +108,7 @@ export function executePlayerAttack(
 }
 
 export function executePlayerDefend(
-  player: PlayerStats,
+  player: CombatPlayerStats,
   monster: MonsterState
 ): CombatTurnResult {
   // Defending doubles defense mitigation for this turn
@@ -128,7 +136,7 @@ export function executePlayerDefend(
 }
 
 export function executePlayerRun(
-  player: PlayerStats,
+  player: CombatPlayerStats,
   monster: MonsterState
 ): CombatTurnResult {
   // 50% chance to run away successfully

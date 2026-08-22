@@ -20,31 +20,32 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
   options = [],
   probabilityTip,
 }) => {
+  const safeText = text || 'The Host watches silently as the anomaly shifts...';
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(true);
 
-  // Typewriter effect logic
+  // Typewriter effect logic with substring slicing (solves text garbling completely)
   useEffect(() => {
     setDisplayedText('');
     setIsTyping(true);
     let index = 0;
 
     const timer = setInterval(() => {
-      if (index < text.length) {
-        setDisplayedText((prev) => prev + text.charAt(index));
-        index++;
+      index++;
+      if (index <= safeText.length) {
+        setDisplayedText(safeText.substring(0, index));
       } else {
         setIsTyping(false);
         clearInterval(timer);
       }
-    }, 18);
+    }, 15);
 
     return () => clearInterval(timer);
-  }, [text]);
+  }, [safeText]);
 
   const handleSkipTyping = () => {
     if (isTyping) {
-      setDisplayedText(text);
+      setDisplayedText(safeText);
       setIsTyping(false);
     }
   };
@@ -66,7 +67,7 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
         {isTyping && <span className="text-amber-500/70 text-[10px] animate-pulse">TYPING...</span>}
       </div>
 
-      {/* Dialogue Text */}
+      {/* Dialogue Text (100% Clean Substring) */}
       <div className="text-white text-sm md:text-base leading-relaxed min-h-[50px] font-mono">
         {displayedText}
         {isTyping && <span className="inline-block w-2 h-4 bg-amber-400 ml-1 animate-ping" />}

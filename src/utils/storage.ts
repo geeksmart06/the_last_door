@@ -11,6 +11,12 @@ const DEFAULT_STATS: GameStatistics = {
   stayWins: 0,
   switchAttempts: 0,
   switchWins: 0,
+  bribesAccepted: 0,
+  falseHostSurvivals: 0,
+  deepestLevel: 1,
+  highestScore: 0,
+  relicsFound: 0,
+  impossibleRoomsFound: 0,
 };
 
 const DEFAULT_SETTINGS: SettingsConfig = {

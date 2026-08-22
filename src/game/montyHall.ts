@@ -23,6 +23,7 @@ export function initializeRound(forcedTreasureIndex?: number): RoundSetup {
     isRevealedByHost: false,
     isSelectedByPlayer: false,
     isAvailableForSwitch: false,
+    probabilityPct: 33.3,
   }));
 
   return {

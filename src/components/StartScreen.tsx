@@ -28,12 +28,12 @@ export const StartScreen: React.FC<StartScreenProps> = ({
 
       {/* Game Title */}
       <h1 className="relative z-10 text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 drop-shadow-[0_4px_10px_rgba(255,191,0,0.4)] tracking-wider mb-2">
-        THE THREE DOORS
+        THE LAST DOOR
       </h1>
 
       {/* Subtitle */}
       <p className="relative z-10 text-xs md:text-sm text-slate-300 italic font-mono mb-8 max-w-md">
-        "A game of chance, deception, and probability."
+        "The deeper you go, the less you can trust."
       </p>
 
       {/* Main Navigation Menu */}

@@ -2,10 +2,6 @@ class AudioManager {
   private ctx: AudioContext | null = null;
   private soundEnabled = true;
 
-  constructor() {
-    // AudioContext created lazily on user interaction
-  }
-
   public setSoundEnabled(enabled: boolean) {
     this.soundEnabled = enabled;
   }
@@ -29,16 +25,16 @@ class AudioManager {
     return this.ctx;
   }
 
-  // 8-Bit Selection Blip
-  public playSelect() {
+  public playSelect(corruptionPct = 0) {
     const ctx = this.initCtx();
     if (!ctx) return;
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
-    osc.type = 'square';
-    osc.frequency.setValueAtTime(440, ctx.currentTime);
+    const freq = corruptionPct > 50 ? 300 + (Math.random() - 0.5) * 200 : 440;
+    osc.type = corruptionPct > 70 ? 'sawtooth' : 'square';
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
     osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
 
     gain.gain.setValueAtTime(0.15, ctx.currentTime);
@@ -51,7 +47,6 @@ class AudioManager {
     osc.stop(ctx.currentTime + 0.08);
   }
 
-  // Wooden Door Creak / Open
   public playDoorOpen() {
     const ctx = this.initCtx();
     if (!ctx) return;
@@ -73,7 +68,6 @@ class AudioManager {
     osc.stop(ctx.currentTime + 0.35);
   }
 
-  // Ominous Monster Reveal Growl
   public playMonsterReveal() {
     const ctx = this.initCtx();
     if (!ctx) return;
@@ -95,12 +89,11 @@ class AudioManager {
     osc.stop(ctx.currentTime + 0.5);
   }
 
-  // Treasure Fanfare Arpeggio
   public playTreasureChime() {
     const ctx = this.initCtx();
     if (!ctx) return;
 
-    const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+    const notes = [523.25, 659.25, 783.99, 1046.5];
     notes.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -119,7 +112,48 @@ class AudioManager {
     });
   }
 
-  // Punchy Attack Slash
+  public playBribeSacrifice() {
+    const ctx = this.initCtx();
+    if (!ctx) return;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(300, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.4);
+
+    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.4);
+  }
+
+  public playGravityFlip() {
+    const ctx = this.initCtx();
+    if (!ctx) return;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(200, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(700, ctx.currentTime + 0.25);
+
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.25);
+  }
+
   public playAttack() {
     const ctx = this.initCtx();
     if (!ctx) return;
@@ -141,7 +175,6 @@ class AudioManager {
     osc.stop(ctx.currentTime + 0.12);
   }
 
-  // Combat Hit / Damage Thud
   public playHit() {
     const ctx = this.initCtx();
     if (!ctx) return;
@@ -163,7 +196,6 @@ class AudioManager {
     osc.stop(ctx.currentTime + 0.2);
   }
 
-  // Defend Shield Ping
   public playDefend() {
     const ctx = this.initCtx();
     if (!ctx) return;
@@ -185,7 +217,6 @@ class AudioManager {
     osc.stop(ctx.currentTime + 0.25);
   }
 
-  // Victory Victory Song snippet
   public playVictory() {
     const ctx = this.initCtx();
     if (!ctx) return;
@@ -218,7 +249,6 @@ class AudioManager {
     });
   }
 
-  // Game Over Sad Chiptune
   public playGameOver() {
     const ctx = this.initCtx();
     if (!ctx) return;
@@ -240,6 +270,48 @@ class AudioManager {
       osc.start(ctx.currentTime + idx * 0.2);
       osc.stop(ctx.currentTime + idx * 0.2 + 0.35);
     });
+  }
+
+  public playBootHum() {
+    const ctx = this.initCtx();
+    if (!ctx) return;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(60, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 1.2);
+
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.2);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 1.2);
+  }
+
+  public playMonitorFlicker() {
+    const ctx = this.initCtx();
+    if (!ctx) return;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(750, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.06);
+
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.06);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.06);
   }
 }
 
